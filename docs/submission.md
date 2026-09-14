@@ -1,10 +1,10 @@
-# ParcelProof submission fields
+# ParcelProof — reviewer submission pack
 
 Contribution type: **Project**. This repository contains a complete app and contract; it is not a contract-only submission.
 
 Project name: **ParcelProof — Decentralized Delivery Dispute & Escrow Settlement**
 
-Primary tag: **Dispute Resolution**. Choose the closest actual commerce/escrow topic entries shown by the portal for secondary topics; do not enter invented topic IDs.
+Suggested primary topic: **Dispute Resolution**. Choose the closest actual commerce/escrow topic entries shown by the portal for secondary topics; do not enter invented topic IDs.
 
 One-liner:
 
@@ -29,10 +29,10 @@ Expected verification outcome:
 
 Evidence links:
 
-- App (currently owner-private): https://parcelproof.amzar1st96.chatgpt.site
+- App (public; no invitation required): https://parcelproof.amzar1st96.chatgpt.site
 
 - Repository: https://github.com/amzar1st/ParcelProof
-- Contract explorer (required genlayer-explorer-contract evidence): https://explorer-studio.genlayer.com/address/0x3904856ea4CE6A2716A86917B566D3753064Bc68
+- Studio contract explorer: https://explorer-studio.genlayer.com/address/0x3904856ea4CE6A2716A86917B566D3753064Bc68
 - Deployment transaction: https://explorer-studio.genlayer.com/tx/0xb95ec192c972276af77776008a1f80448f623151e03587b60ddb13a5e0ba9532
 - Contract source: https://github.com/amzar1st/ParcelProof/blob/main/contracts/parcelproof.py
 - Tests: https://github.com/amzar1st/ParcelProof/blob/main/tests/test_parcelproof.py
@@ -43,6 +43,10 @@ Evidence links:
 
 Completed transaction evidence: https://github.com/amzar1st/ParcelProof/blob/main/docs/verification.md
 
-Synthetic web/LLM consensus evidence (not real carrier evidence): https://github.com/amzar1st/ParcelProof/blob/main/docs/fixture-proof.json A YouTube demo video is optional and has not been recorded.
+Synthetic web/LLM consensus evidence (not real carrier evidence): https://github.com/amzar1st/ParcelProof/blob/main/docs/fixture-proof.json
 
-A public reviewer-accessible website and the portal's acceptance of Studio-network evidence must be confirmed before calling this submission-ready. Do not describe the sandbox as mainnet settlement or synthetic notes as real carrier evidence.
+No demo video has been recorded. Check the target program for any video requirement.
+
+Public access is confirmed in [publication.json](publication.json). This pack describes the completed Studio sandbox MVP, not production settlement. The target submission page has not been supplied, so acceptance of Studio-network evidence, required topic choices, and video requirements are not verified. No portal submission has been made. Do not describe synthetic records as real carrier evidence.
+
+Additional evidence: [completed verification](verification.md), [signed wallet/relay receipts](relay-signed-proof.json), [release checklist](release-checklist.md).

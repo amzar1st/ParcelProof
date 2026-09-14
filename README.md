@@ -4,7 +4,7 @@ ParcelProof is a **GenLayer Project**: an Intelligent Contract plus a wallet-con
 
 ## Deployment
 
-- Website: [ParcelProof](https://parcelproof.amzar1st96.chatgpt.site) — currently owner-private.
+- Website: [ParcelProof](https://parcelproof.amzar1st96.chatgpt.site) — public; no invitation required.
 
 - Network: **GenLayer Studio sandbox / studionet (61999)**
 - Contract: [`0x3904856ea4CE6A2716A86917B566D3753064Bc68`](https://explorer-studio.genlayer.com/address/0x3904856ea4CE6A2716A86917B566D3753064Bc68)
@@ -67,3 +67,7 @@ pnpm dev
 Open the local URL printed by Vinext. The contract is already deployed; the app reads the primary address in `lib/deployment.json`. Use the Studio test-wallet button for simulated buyer/seller actions.
 
 Install the lockfile using the declared pnpm version. The deployment source repository contains the full app and contract; generated builds and secrets are excluded from Git.
+
+## Submission materials
+
+[Reviewer submission pack](docs/submission.md) and [release checklist](docs/release-checklist.md). The website is public. The deployed network is Studio; eligibility for a particular program must be checked against that program's requirements. No portal submission has been made.
