@@ -21,7 +21,8 @@ try{
   const context=await browser.newContext({viewport});const page=await context.newPage();page.setDefaultTimeout(20000);
   page.on('pageerror',e=>proof.errors.push({viewport:name,message:e.message}));
   await page.route('**/api/rpc',async route=>{const p=route.request().postDataJSON();if(p?.method==='sim_fundAccount')await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({jsonrpc:'2.0',id:p.id,result:null})});else await route.continue()});
-  await page.goto(base,{waitUntil:'domcontentloaded'});
+  await page.goto(base,{waitUntil:'networkidle',timeout:120000});
+  assert.deepEqual(proof.errors,[],'Client-side boot errors');
   await check(name+'/renders five tabs',async()=>{await page.getByRole('heading',{level:1}).waitFor();assert.equal(await page.getByRole('tab').count(),5)});
   await page.getByRole('button',{name:'Connect wallet',exact:true}).click();
   await check(name+'/missing wallet error',async()=>{await page.getByRole('alert').filter({hasText:'No browser wallet found'}).waitFor()});
@@ -44,5 +45,5 @@ try{
   await page.screenshot({path:'outputs/browser-'+name+'.png',fullPage:true});proof.viewports.push({name,...viewport});await context.close();
  }
  assert.deepEqual(proof.errors,[]);proof.completed_at=new Date().toISOString();console.log('PASS browser smoke: '+proof.checks.length);
-}catch(e){proof.failure=e.message;process.exitCode=1;console.error(e)}
-finally{fs.writeFileSync('outputs/browser-proof.json',JSON.stringify(proof,null,2)+'\n');if(browser)await browser.close();try{process.kill(-server.pid,'SIGTERM')}catch{}log.end()}
+}catch(e){proof.failure=e.message;process.exitCode=1;console.error(e);console.error('BROWSER_DIAGNOSTICS '+JSON.stringify(proof))}
+finally{console.log('BROWSER_PROOF '+JSON.stringify(proof));fs.writeFileSync('outputs/browser-proof.json',JSON.stringify(proof,null,2)+'\n');if(browser)await browser.close();try{process.kill(-server.pid,'SIGTERM')}catch{}log.end()}
