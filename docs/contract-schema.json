@@ -1,0 +1,287 @@
+{
+  "ctor": {
+    "params": [
+      [
+        "fixture_commit",
+        "string"
+      ]
+    ],
+    "kwparams": {}
+  },
+  "methods": {
+    "accept_order": {
+      "params": [
+        [
+          "order_id",
+          "string"
+        ],
+        [
+          "terms_hash",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "any",
+      "payable": false
+    },
+    "cancel_order": {
+      "params": [
+        [
+          "order_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "any",
+      "payable": false
+    },
+    "claim_buyer_refund": {
+      "params": [
+        [
+          "order_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "any",
+      "payable": false
+    },
+    "claim_seller_payment": {
+      "params": [
+        [
+          "order_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "any",
+      "payable": false
+    },
+    "confirm_delivery": {
+      "params": [
+        [
+          "order_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "any",
+      "payable": false
+    },
+    "create_order": {
+      "params": [
+        [
+          "order_id",
+          "string"
+        ],
+        [
+          "seller",
+          "string"
+        ],
+        [
+          "description",
+          "string"
+        ],
+        [
+          "shipment_reference",
+          "string"
+        ],
+        [
+          "recipient_commitment",
+          "string"
+        ],
+        [
+          "recipient_hint",
+          "string"
+        ],
+        [
+          "carrier",
+          "string"
+        ],
+        [
+          "tracking_url",
+          "string"
+        ],
+        [
+          "delivery_proof_url",
+          "string"
+        ],
+        [
+          "delivery_deadline",
+          "int"
+        ],
+        [
+          "acceptance_seconds",
+          "int"
+        ],
+        [
+          "shipping_seconds",
+          "int"
+        ],
+        [
+          "challenge_seconds",
+          "int"
+        ],
+        [
+          "retry_seconds",
+          "int"
+        ],
+        [
+          "late_outcome",
+          "string"
+        ],
+        [
+          "tracking_hash",
+          "string"
+        ],
+        [
+          "proof_hash",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "any",
+      "payable": true
+    },
+    "get_accounting": {
+      "params": [],
+      "kwparams": {},
+      "readonly": true,
+      "ret": "string"
+    },
+    "get_order": {
+      "params": [
+        [
+          "order_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": true,
+      "ret": "string"
+    },
+    "get_result": {
+      "params": [
+        [
+          "order_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": true,
+      "ret": "string"
+    },
+    "list_orders": {
+      "params": [],
+      "kwparams": {},
+      "readonly": true,
+      "ret": [
+        {
+          "$rep": "string"
+        }
+      ]
+    },
+    "mark_shipped": {
+      "params": [
+        [
+          "order_id",
+          "string"
+        ],
+        [
+          "shipment_reference",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "any",
+      "payable": false
+    },
+    "open_dispute": {
+      "params": [
+        [
+          "order_id",
+          "string"
+        ],
+        [
+          "reason",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "any",
+      "payable": false
+    },
+    "resolve_dispute": {
+      "params": [
+        [
+          "order_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "any",
+      "payable": false
+    },
+    "resolve_timeout": {
+      "params": [
+        [
+          "order_id",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "any",
+      "payable": false
+    },
+    "submit_counter_evidence": {
+      "params": [
+        [
+          "order_id",
+          "string"
+        ],
+        [
+          "text",
+          "string"
+        ],
+        [
+          "expected_hash",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "any",
+      "payable": false
+    },
+    "submit_evidence": {
+      "params": [
+        [
+          "order_id",
+          "string"
+        ],
+        [
+          "text",
+          "string"
+        ],
+        [
+          "expected_hash",
+          "string"
+        ]
+      ],
+      "kwparams": {},
+      "readonly": false,
+      "ret": "any",
+      "payable": false
+    }
+  }
+}

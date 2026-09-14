@@ -1,0 +1,8 @@
+{
+  "address": "0xFD4739482fb0Cc5D5deebC286964Cb64308C964f",
+  "network": "studionet",
+  "rpc": "https://studio.genlayer.com/api",
+  "fixture_commit": "",
+  "explorer": "https://explorer-studio.genlayer.com/address/0xFD4739482fb0Cc5D5deebC286964Cb64308C964f",
+  "deployment_transaction": "0xcf35f130f7e11ac25871d9a273e6f841fba7978e6bdcccb179e4291020c7f1b2"
+}
