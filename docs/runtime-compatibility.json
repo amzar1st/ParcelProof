@@ -1,0 +1,17 @@
+{
+  "pinned_sdk": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6",
+  "web_response_http_field": "status",
+  "web_response_body_type": "bytes",
+  "llm_response_format": "json",
+  "llm_response_type": "dict",
+  "probe_address": "0xa3d554f7faCbE0C69263AE74B7E20EB3D6753368",
+  "probe_transaction": "0xa231b01b98c2f7b8ef82759177de6499a3326c2f19a2db7f6a153dd68321087d",
+  "probe_result": {
+    "stage": "success",
+    "kind": "dict",
+    "parsed": {
+      "verdict": "DELIVERED"
+    }
+  },
+  "scope": "Actual Studio GenVM web fetch and structured LLM connectivity test; prompt explicitly requested DELIVERED, so this is not evidence-based delivery adjudication."
+}

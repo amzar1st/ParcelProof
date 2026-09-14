@@ -33,13 +33,14 @@ prompt_error=False
 web_calls=[]
 def get(url):
     web_calls.append(url)
-    value = pages.get(url, SimpleNamespace(status_code=200,body=b'PP-1234 Colombo 00700'))
+    value = pages.get(url, SimpleNamespace(status=200,body=b'PP-1234 Colombo 00700'))
     if isinstance(value,Exception): raise value
     return value
-def prompt(text):
+def prompt(text, response_format):
+    assert response_format == "json"
     import json
     if prompt_error: raise ValueError('provider down')
-    return response if isinstance(response,str) else json.dumps(response)
+    return response
 gl=SimpleNamespace(Contract=Contract,public=SimpleNamespace(write=Decorator(),view=Decorator()),vm=SimpleNamespace(UserError=UserError),evm=SimpleNamespace(contract_interface=interface),message=SimpleNamespace(sender_address=Address('0x'+'1'*40),value=100),message_raw={'datetime':'2026-09-14T00:00:00+00:00'},eq_principle=SimpleNamespace(strict_eq=lambda f:f()),nondet=SimpleNamespace(web=SimpleNamespace(get=get),exec_prompt=prompt))
 
 def tx(contract, method, *args):

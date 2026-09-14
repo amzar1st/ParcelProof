@@ -29,9 +29,11 @@ Expected verification outcome:
 
 Evidence links:
 
+- App (currently owner-private): https://parcelproof.amzar1st96.chatgpt.site
+
 - Repository: https://github.com/amzar1st/ParcelProof
-- Contract explorer (required genlayer-explorer-contract evidence): https://explorer-studio.genlayer.com/address/0xFD4739482fb0Cc5D5deebC286964Cb64308C964f
-- Deployment transaction: https://explorer-studio.genlayer.com/tx/0xcf35f130f7e11ac25871d9a273e6f841fba7978e6bdcccb179e4291020c7f1b2
+- Contract explorer (required genlayer-explorer-contract evidence): https://explorer-studio.genlayer.com/address/0x2CFdd22CedcE20104A53ceeDB4f30E6Fb4ab8455
+- Deployment transaction: https://explorer-studio.genlayer.com/tx/0x80bcc982a70d8d5ea7b3fe4b712f2905b52c9ccfe4da3bf4d4ec3dea6304d550
 - Contract source: https://github.com/amzar1st/ParcelProof/blob/main/contracts/parcelproof.py
 - Tests: https://github.com/amzar1st/ParcelProof/blob/main/tests/test_parcelproof.py
 - Live receipts and finalized orders: https://github.com/amzar1st/ParcelProof/blob/main/docs/live-proof.json

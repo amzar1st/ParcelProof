@@ -1,8 +1,8 @@
 {
-  "address": "0xFD4739482fb0Cc5D5deebC286964Cb64308C964f",
+  "address": "0x2CFdd22CedcE20104A53ceeDB4f30E6Fb4ab8455",
   "network": "studionet",
   "rpc": "https://studio.genlayer.com/api",
   "fixture_commit": "",
   "explorer": "https://explorer-studio.genlayer.com/address/0xFD4739482fb0Cc5D5deebC286964Cb64308C964f",
-  "deployment_transaction": "0xcf35f130f7e11ac25871d9a273e6f841fba7978e6bdcccb179e4291020c7f1b2"
+  "deployment_transaction": "0x80bcc982a70d8d5ea7b3fe4b712f2905b52c9ccfe4da3bf4d4ec3dea6304d550"
 }

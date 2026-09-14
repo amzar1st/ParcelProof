@@ -1,0 +1,10 @@
+const fs=require('node:fs'),path=require('node:path'),http=require('node:http'),assert=require('node:assert/strict'),ts=require('typescript');
+const folder=path.resolve('.sites-runtime/frontend-tests');fs.mkdirSync(folder,{recursive:true});
+const compile=(source,out)=>fs.writeFileSync(path.join(folder,out),ts.transpileModule(fs.readFileSync(source,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020,esModuleInterop:true}}).outputText);
+compile('app/api/rpc/route.ts','route.cjs');compile('lib/parcelproof.ts','parcelproof.cjs');fs.copyFileSync('lib/deployment.json',path.join(folder,'deployment.json'));
+const {POST}=require(path.join(folder,'route.cjs'));
+const server=http.createServer(async(req,res)=>{try{let body='';for await(const chunk of req)body+=chunk;const r=await POST(new Request('http://test/api/rpc',{method:'POST',body,headers:{'Content-Type':'application/json'}}));res.writeHead(r.status,Object.fromEntries(r.headers));res.end(await r.text())}catch{res.writeHead(500);res.end('{}')}});
+server.listen(0,'127.0.0.1',async()=>{try{const origin='http://127.0.0.1:'+server.address().port;global.window={location:{origin}};const denied=await fetch(origin+'/api/rpc',{method:'POST',body:JSON.stringify({jsonrpc:'2.0',id:1,method:'arbitrary_method',params:[]})});assert.equal(denied.status,400);console.log('PASS relay rejects RPC methods outside its allowlist');
+ const {readOrder,readResult}=require(path.join(folder,'parcelproof.cjs'));const o=await readOrder('parcelproof-paid-001');assert.equal(o.status,'CLAIMED');const r=await readResult(o.id);assert.equal(r.status,'CLAIMED');assert.equal(r.beneficiary,o.seller);console.log('PASS actual frontend helpers read finalized seller claim through the same-origin relay');
+ fs.writeFileSync('docs/relay-verification.json',JSON.stringify({checked_at:new Date().toISOString(),arbitrary_rpc_rejected:true,order_id:o.id,status:o.status,beneficiary:r.beneficiary,read_variant:'LATEST_FINAL',scope:'Node HTTP integration, not browser UI testing'},null,2)+'\n');
+}catch(e){console.error(e);process.exitCode=1}finally{server.close()}});

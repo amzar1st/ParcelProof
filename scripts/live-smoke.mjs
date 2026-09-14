@@ -32,7 +32,7 @@ const deployReceipt=await b.getTransaction({hash:deployment.deployment_transacti
 const sha=x=>crypto.createHash('sha256').update(x).digest('hex');
 const destination='Colombo 00700';
 const source1='https://www.ups.com/track?tracknum=PP-STUDIO-001';const source2='https://www.ups.com/proof/PP-STUDIO-001';
-function args(id,deadline,challenge=180,retry=60){return[id,seller.address,'Studio test order; not a real shipment','PP-STUDIO-001',sha(destination),destination,'UPS',source1,source2,deadline,120,120,challenge,retry,'BUYER_REFUND','','']}
+function args(id,deadline,challenge=60,retry=60){return[id,seller.address,'Studio test order; not a real shipment','PP-STUDIO-001',sha(destination),destination,'UPS',source1,source2,deadline,120,120,challenge,retry,'BUYER_REFUND','','']}
 const ids=proof.ids??{paid:'parcelproof-paid-001',cancel:'parcelproof-cancel-001',dispute:'parcelproof-review-001'};proof.ids=ids;save();
 await write('paid/create',b,'create_order',args(ids.paid,Math.floor(Date.now()/1000)+900),1000000000000000n);
 let o=await read(ids.paid);await write('paid/accept',s,'accept_order',[ids.paid,o.terms_hash]);
@@ -42,7 +42,7 @@ await write('paid/claim',s,'claim_seller_payment',[ids.paid]);await read(ids.pai
 await write('cancel/create',b,'create_order',args(ids.cancel,Math.floor(Date.now()/1000)+900),1000000000000000n);
 await write('cancel/cancel',b,'cancel_order',[ids.cancel]);
 await write('cancel/refund',b,'claim_buyer_refund',[ids.cancel]);await read(ids.cancel);
-await write('dispute/create',b,'create_order',args(ids.dispute,Math.floor(Date.now()/1000)+320),1000000000000000n);
+await write('dispute/create',b,'create_order',args(ids.dispute,Math.floor(Date.now()/1000)+260),1000000000000000n);
 o=await read(ids.dispute);await write('dispute/accept',s,'accept_order',[ids.dispute,o.terms_hash]);
 await write('dispute/ship',s,'mark_shipped',[ids.dispute,'PP-STUDIO-001']);
 await write('dispute/open',b,'open_dispute',[ids.dispute,'Carrier evidence does not identify this synthetic shipment']);

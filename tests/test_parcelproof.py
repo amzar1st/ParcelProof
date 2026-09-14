@@ -114,15 +114,15 @@ class Tests(unittest.TestCase):
     def test_missing_citation(self):
         self.disputed();self.resolve(c=[]);self.assertEqual(self.order()['status'],'EVIDENCE_REVIEW')
     def test_outage_and_timeout(self):
-        self.disputed();fake.pages[U]=SimpleNamespace(status_code=503,body=b'error');self.resolve();self.assertEqual(self.order()['status'],'EVIDENCE_REVIEW');self.assertEqual(self.c.total_locked,100);self.context(B,self.order()['terminal_at']);fake.tx(self.c,'resolve_timeout','o1');fake.tx(self.c,'claim_buyer_refund','o1');self.conserved()
+        self.disputed();fake.pages[U]=SimpleNamespace(status=503,body=b'error');self.resolve();self.assertEqual(self.order()['status'],'EVIDENCE_REVIEW');self.assertEqual(self.c.total_locked,100);self.context(B,self.order()['terminal_at']);fake.tx(self.c,'resolve_timeout','o1');fake.tx(self.c,'claim_buyer_refund','o1');self.conserved()
     def test_source_hash_mismatch(self):
         self.create(tracking_hash='a'*64);self.context(S,T+10);fake.tx(self.c,'accept_order','o1',self.order()['terms_hash']);self.context(S,T+20);fake.tx(self.c,'mark_shipped','o1','PP-1234');self.context(B,T+30);fake.tx(self.c,'open_dispute','o1','missing');self.resolve();self.assertEqual(self.order()['status'],'EVIDENCE_REVIEW')
     def test_oversized_page(self):
-        self.disputed();fake.pages[U]=SimpleNamespace(status_code=200,body=b'x'*64001);self.resolve();self.assertEqual(self.order()['status'],'EVIDENCE_REVIEW')
+        self.disputed();fake.pages[U]=SimpleNamespace(status=200,body=b'x'*64001);self.resolve();self.assertEqual(self.order()['status'],'EVIDENCE_REVIEW')
     def test_missing_destination_is_inconclusive(self):
-        self.disputed();fake.pages[U]=SimpleNamespace(status_code=200,body=b'PP-1234 Wrong City');fake.pages[P]=SimpleNamespace(status_code=200,body=b'PP-1234 Wrong City');self.resolve();self.assertEqual(self.order()['status'],'EVIDENCE_REVIEW')
+        self.disputed();fake.pages[U]=SimpleNamespace(status=200,body=b'PP-1234 Wrong City');fake.pages[P]=SimpleNamespace(status=200,body=b'PP-1234 Wrong City');self.resolve();self.assertEqual(self.order()['status'],'EVIDENCE_REVIEW')
     def test_wrong_tracking_reference_is_inconclusive(self):
-        self.disputed();fake.pages[U]=SimpleNamespace(status_code=200,body=b'OTHER-TRACKING Colombo 00700');self.resolve();self.assertEqual(self.order()['status'],'EVIDENCE_REVIEW')
+        self.disputed();fake.pages[U]=SimpleNamespace(status=200,body=b'OTHER-TRACKING Colombo 00700');self.resolve();self.assertEqual(self.order()['status'],'EVIDENCE_REVIEW')
     def test_recipient_commitment_mismatch(self):
         with self.assertRaises(fake.UserError):self.create(recipient_commitment='a'*64)
     def test_evidence_capacity_is_bounded(self):

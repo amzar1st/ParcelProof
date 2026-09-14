@@ -1,0 +1,22 @@
+import fs from 'node:fs';import crypto from 'node:crypto';
+import {createClient,createAccount,generatePrivateKey} from 'genlayer-js';import {studionet} from 'genlayer-js/chains';import {TransactionStatus,TransactionHashVariant} from 'genlayer-js/types';
+const commit=process.argv[2];if(!/^[a-f0-9]{40}$/.test(commit))throw new Error('Pinned fixture commit required');
+const secretPath='.sites-runtime/fixture-wallets.json';const keys=fs.existsSync(secretPath)?JSON.parse(fs.readFileSync(secretPath,'utf8')):{buyer:generatePrivateKey(),seller:generatePrivateKey()};fs.writeFileSync(secretPath,JSON.stringify(keys),{mode:0o600});
+const buyer=createAccount(keys.buyer),seller=createAccount(keys.seller);const b=createClient({chain:studionet,account:buyer}),s=createClient({chain:studionet,account:seller});
+const out='docs/fixture-proof.json';const proof=fs.existsSync(out)?JSON.parse(fs.readFileSync(out,'utf8')):{synthetic_evidence:true,network:'Studio sandbox',fixture_commit:commit,buyer:buyer.address,seller:seller.address,transactions:[]};
+const save=()=>fs.writeFileSync(out,JSON.stringify(proof,(_,v)=>typeof v==='bigint'?v.toString():v,2)+'\n');
+function success(r){if((r.statusName??r.status_name)!=='FINALIZED'&&String(r.status)!=='7')throw new Error('Not finalized');if(r.consensus_data?.leader_receipt?.[0]?.execution_result!=='SUCCESS')throw new Error('Execution failed: '+JSON.stringify(r));}
+async function receipt(hash){const r=await b.waitForTransactionReceipt({hash,status:TransactionStatus.FINALIZED,retries:120,interval:3000});success(r);return r;}
+await b.request({method:'sim_fundAccount',params:[buyer.address,10000000000000000000]});await s.request({method:'sim_fundAccount',params:[seller.address,10000000000000000000]});
+if(!proof.deployment_hash){proof.deployment_hash=await b.deployContract({code:fs.readFileSync('contracts/parcelproof.py','utf8'),args:[commit]});save();console.log('Fixture-mode instance deployment submitted '+proof.deployment_hash)}
+if(!proof.deployment_receipt){proof.deployment_receipt=await receipt(proof.deployment_hash);const r=await b.getTransaction({hash:proof.deployment_hash});proof.address=r.to_address??r.recipient??r.txDataDecoded?.contractAddress;save()}
+if(!proof.address)throw new Error('Deployment address missing');console.log('Fixture instance: '+proof.address);
+const url='https://raw.githubusercontent.com/amzar1st/ParcelProof/'+commit+'/fixtures/delivered.json';
+async function write(label,client,method,args,value=0n){let tx=proof.transactions.find(t=>t.label===label);if(tx?.receipt){success(tx.receipt);return}if(!tx){tx={label,method,args,hash:await client.writeContract({address:proof.address,functionName:method,args,value})};proof.transactions.push(tx);save();console.log(label+' submitted '+tx.hash)}tx.receipt=await receipt(tx.hash);save();console.log(label+' FINALIZED SUCCESS')}
+const id='parcelproof-synthetic-delivered-001';proof.order_id=id;save();const destination='Colombo 00700',sha=x=>crypto.createHash('sha256').update(x).digest('hex');
+await write('create',b,'create_order',[id,seller.address,'Synthetic validator adjudication test; not real commerce','PP-FIXTURE-001',sha(destination),destination,'FIXTURE',url,url,Math.floor(Date.now()/1000)+400,120,120,60,120,'BUYER_REFUND','',''],1000000000000000n);
+const read=async()=>JSON.parse(await b.readContract({address:proof.address,functionName:'get_order',args:[id],transactionHashVariant:TransactionHashVariant.LATEST_FINAL}));
+let o=await read();await write('accept',s,'accept_order',[id,o.terms_hash]);await write('ship',s,'mark_shipped',[id,'PP-FIXTURE-001']);await write('open-dispute',b,'open_dispute',[id,'Adjudicate synthetic authorized carrier evidence independently']);o=await read();
+const eligible=Math.max(o.delivery_deadline,o.evidence_close);while(Date.now()/1000<eligible){console.log('Waiting for real contract deadline: '+Math.ceil(eligible-Date.now()/1000)+' seconds');await new Promise(r=>setTimeout(r,Math.min(30000,(eligible-Date.now()/1000)*1000)))}
+await write('resolve',b,'resolve_dispute',[id]);o=await read();proof.resolved_order=o;save();if(o.verdict!=='DELIVERED'||o.beneficiary!==seller.address.toLowerCase())throw new Error('Synthetic LLM evidence did not resolve DELIVERED: '+JSON.stringify(o));
+await write('claim',s,'claim_seller_payment',[id]);proof.final_order=await read();proof.completed_at=new Date().toISOString();save();console.log('SYNTHETIC WEB + LLM + CONSENSUS ADJUDICATION PASSED');

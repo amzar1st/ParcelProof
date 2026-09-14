@@ -4,9 +4,11 @@ ParcelProof is a **GenLayer Project**: an Intelligent Contract plus a wallet-con
 
 ## Deployment
 
+- Website: [ParcelProof](https://parcelproof.amzar1st96.chatgpt.site) — currently owner-private.
+
 - Network: **GenLayer Studio sandbox / studionet (61999)**
-- Contract: [`0xFD4739482fb0Cc5D5deebC286964Cb64308C964f`](https://explorer-studio.genlayer.com/address/0xFD4739482fb0Cc5D5deebC286964Cb64308C964f)
-- Deployment: [`0xcf35f130f7e11ac25871d9a273e6f841fba7978e6bdcccb179e4291020c7f1b2`](https://explorer-studio.genlayer.com/tx/0xcf35f130f7e11ac25871d9a273e6f841fba7978e6bdcccb179e4291020c7f1b2)
+- Contract: [`0x2CFdd22CedcE20104A53ceeDB4f30E6Fb4ab8455`](https://explorer-studio.genlayer.com/address/0x2CFdd22CedcE20104A53ceeDB4f30E6Fb4ab8455)
+- Deployment: [`0x80bcc982a70d8d5ea7b3fe4b712f2905b52c9ccfe4da3bf4d4ec3dea6304d550`](https://explorer-studio.genlayer.com/tx/0x80bcc982a70d8d5ea7b3fe4b712f2905b52c9ccfe4da3bf4d4ec3dea6304d550)
 - Canonical source: [`contracts/parcelproof.py`](contracts/parcelproof.py)
 - Source fetched from the deployed contract: [`docs/deployed-source.py`](docs/deployed-source.py), verified identical after trimming whitespace.
 
@@ -52,5 +54,14 @@ node scripts/run-framework.mjs build
 ## Development
 
 The app uses React, Vinext, the provided Shadcn tab/select primitives, and GenLayerJS. `lib/deployment.json` selects the deployed contract. A same-origin RPC relay forwards only a bounded allowlist of methods to the fixed Studio endpoint; it holds no wallet keys and cannot send arbitrary HTTP requests.
+
+Use Node 22.13 or later and pnpm 11.25.0:
+
+```bash
+pnpm install --frozen-lockfile
+pnpm dev
+```
+
+Open the local URL printed by Vinext. The contract is already deployed; the app reads the primary address in `lib/deployment.json`. Use the Studio test-wallet button for simulated buyer/seller actions.
 
 Install the lockfile using the declared pnpm version. The deployment source repository contains the full app and contract; generated builds and secrets are excluded from Git.
