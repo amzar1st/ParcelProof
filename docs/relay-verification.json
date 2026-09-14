@@ -1,0 +1,9 @@
+{
+  "checked_at": "2026-09-14T13:44:21.490Z",
+  "arbitrary_rpc_rejected": true,
+  "order_id": "parcelproof-paid-001",
+  "status": "CLAIMED",
+  "beneficiary": "0x7c7e7b4bb465a007550355d848fe4a9c075349a9",
+  "read_variant": "LATEST_FINAL",
+  "scope": "Node HTTP integration, not browser UI testing"
+}

@@ -32,7 +32,7 @@ const deployReceipt=await b.getTransaction({hash:deployment.deployment_transacti
 const sha=x=>crypto.createHash('sha256').update(x).digest('hex');
 const destination='Colombo 00700';
 const source1='https://www.ups.com/track?tracknum=PP-STUDIO-001';const source2='https://www.ups.com/proof/PP-STUDIO-001';
-function args(id,deadline,challenge=60,retry=60){return[id,seller.address,'Studio test order; not a real shipment','PP-STUDIO-001',sha(destination),destination,'UPS',source1,source2,deadline,120,120,challenge,retry,'BUYER_REFUND','','']}
+function args(id,deadline,challenge=120,retry=60){return[id,seller.address,'Studio test order; not a real shipment','PP-STUDIO-001',sha(destination),destination,'UPS',source1,source2,deadline,120,120,challenge,retry,'BUYER_REFUND','','']}
 const ids=proof.ids??{paid:'parcelproof-paid-001',cancel:'parcelproof-cancel-001',dispute:'parcelproof-review-001'};proof.ids=ids;save();
 await write('paid/create',b,'create_order',args(ids.paid,Math.floor(Date.now()/1000)+900),1000000000000000n);
 let o=await read(ids.paid);await write('paid/accept',s,'accept_order',[ids.paid,o.terms_hash]);
@@ -42,13 +42,19 @@ await write('paid/claim',s,'claim_seller_payment',[ids.paid]);await read(ids.pai
 await write('cancel/create',b,'create_order',args(ids.cancel,Math.floor(Date.now()/1000)+900),1000000000000000n);
 await write('cancel/cancel',b,'cancel_order',[ids.cancel]);
 await write('cancel/refund',b,'claim_buyer_refund',[ids.cancel]);await read(ids.cancel);
-await write('dispute/create',b,'create_order',args(ids.dispute,Math.floor(Date.now()/1000)+260),1000000000000000n);
+await write('dispute/create',b,'create_order',args(ids.dispute,Math.floor(Date.now()/1000)+300),1000000000000000n);
 o=await read(ids.dispute);await write('dispute/accept',s,'accept_order',[ids.dispute,o.terms_hash]);
 await write('dispute/ship',s,'mark_shipped',[ids.dispute,'PP-STUDIO-001']);
 await write('dispute/open',b,'open_dispute',[ids.dispute,'Carrier evidence does not identify this synthetic shipment']);
-const note='Synthetic seller note; does not prove delivery';await write('dispute/seller-evidence',s,'submit_evidence',[ids.dispute,note,sha(note)]);
-const counter='Synthetic buyer statement: parcel not received';await write('dispute/buyer-evidence',b,'submit_counter_evidence',[ids.dispute,counter,sha(counter)]);
+const note='Synthetic seller note; does not prove delivery';
+const counter='Synthetic buyer statement: parcel not received';
+// Independent parties may sign concurrently. Each receipt must still finalize.
+await Promise.all([
+ write('dispute/seller-evidence',s,'submit_evidence',[ids.dispute,note,sha(note)]),
+ write('dispute/buyer-evidence',b,'submit_counter_evidence',[ids.dispute,counter,sha(counter)]),
+]);
 o=await read(ids.dispute);
+if(o.seller_evidence.length!==1||o.buyer_evidence.length!==1)throw new Error('Two-sided committed evidence missing from finalized state');
 console.log('Dispute evidence closes: '+new Date(o.evidence_close*1000).toISOString());
 const eligible=Math.max(o.evidence_close,o.delivery_deadline);
 while(Date.now()/1000<eligible){console.log('Waiting for contract adjudication deadline; remaining seconds '+Math.ceil(eligible-Date.now()/1000));await new Promise(r=>setTimeout(r,Math.min(30000,(eligible-Date.now()/1000)*1000)))}
@@ -58,6 +64,12 @@ await write('dispute/retry',b,'resolve_dispute',[ids.dispute]);o=await read(ids.
 while(Date.now()/1000<o.terminal_at){console.log('Waiting for fixed refund deadline; remaining seconds '+Math.ceil(o.terminal_at-Date.now()/1000));await new Promise(r=>setTimeout(r,Math.min(30000,(o.terminal_at-Date.now()/1000)*1000)))}
 await write('dispute/timeout',b,'resolve_timeout',[ids.dispute]);
 await write('dispute/refund',b,'claim_buyer_refund',[ids.dispute]);await read(ids.dispute);
+// Recover the earlier short-window case after the main workflow is done.
+if(proof.short_window_order_id){
+ await write('short-window/timeout',b,'resolve_timeout',[proof.short_window_order_id]);
+ await write('short-window/refund',b,'claim_buyer_refund',[proof.short_window_order_id]);
+ await read(proof.short_window_order_id);
+}
 proof.accounting=JSON.parse(await b.readContract({address:deployment.address,functionName:'get_accounting',args:[],transactionHashVariant:TransactionHashVariant.LATEST_FINAL}));
 const a=proof.accounting;if(BigInt(a.deposited)!==BigInt(a.locked)+BigInt(a.claimable)+BigInt(a.emitted))throw new Error('Accounting mismatch');
 proof.completed_at=new Date().toISOString();save();console.log('ALL LIVE SANDBOX WORKFLOWS PASSED');

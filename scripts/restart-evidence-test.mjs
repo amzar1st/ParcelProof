@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const path='docs/live-proof.json';const proof=JSON.parse(fs.readFileSync(path,'utf8'));
+const late=proof.transactions.find(t=>t.label==='dispute/buyer-evidence');
+assert.equal(late?.receipt?.status_name,'FINALIZED');
+assert.equal(late.receipt.consensus_data.leader_receipt[0].execution_result,'ERROR');
+assert.equal(late.receipt.consensus_data.leader_receipt[0].result.payload,'evidence window closed');
+const previous=proof.ids.dispute;
+const short={deployment:proof.deployment,order_id:previous,scope:'Negative sandbox test: the 60-second window rejected buyer evidence submitted after closure; escrow remains protected until timeout.',transactions:proof.transactions.filter(t=>t.label.startsWith('dispute/'))};
+fs.writeFileSync('docs/short-window-proof.json',JSON.stringify(short,null,2)+'\n');
+proof.transactions=proof.transactions.filter(t=>!t.label.startsWith('dispute/'));
+delete proof.orders[previous];proof.short_window_order_id=previous;proof.ids.dispute='parcelproof-review-002';
+fs.writeFileSync(path,JSON.stringify(proof,null,2)+'\n');
+console.log('Retained finalized rejection proof; new two-sided case uses a longer window.');

@@ -1,0 +1,9 @@
+{
+  "synthetic_evidence": true,
+  "network": "Studio sandbox",
+  "fixture_commit": "8483ef78630227b6a9619ac2a7a312b5d97ce680",
+  "buyer": "0x377611b104c046Abb4A8c569e17Ca459268eC7AC",
+  "seller": "0x1A1F4079743EF8eA906dF3D23758167a9d8C3683",
+  "transactions": [],
+  "deployment_hash": "0xc295bcb1b53e66b969f62e3309297fb689bc30c6494f279ead0dc91d6fc82cff"
+}

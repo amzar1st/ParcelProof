@@ -7,8 +7,8 @@ ParcelProof is a **GenLayer Project**: an Intelligent Contract plus a wallet-con
 - Website: [ParcelProof](https://parcelproof.amzar1st96.chatgpt.site) — currently owner-private.
 
 - Network: **GenLayer Studio sandbox / studionet (61999)**
-- Contract: [`0x2CFdd22CedcE20104A53ceeDB4f30E6Fb4ab8455`](https://explorer-studio.genlayer.com/address/0x2CFdd22CedcE20104A53ceeDB4f30E6Fb4ab8455)
-- Deployment: [`0x80bcc982a70d8d5ea7b3fe4b712f2905b52c9ccfe4da3bf4d4ec3dea6304d550`](https://explorer-studio.genlayer.com/tx/0x80bcc982a70d8d5ea7b3fe4b712f2905b52c9ccfe4da3bf4d4ec3dea6304d550)
+- Contract: [`0x3904856ea4CE6A2716A86917B566D3753064Bc68`](https://explorer-studio.genlayer.com/address/0x3904856ea4CE6A2716A86917B566D3753064Bc68)
+- Deployment: [`0xb95ec192c972276af77776008a1f80448f623151e03587b60ddb13a5e0ba9532`](https://explorer-studio.genlayer.com/tx/0xb95ec192c972276af77776008a1f80448f623151e03587b60ddb13a5e0ba9532)
 - Canonical source: [`contracts/parcelproof.py`](contracts/parcelproof.py)
 - Source fetched from the deployed contract: [`docs/deployed-source.py`](docs/deployed-source.py), verified identical after trimming whitespace.
 
@@ -39,6 +39,8 @@ Buyer, Seller, Dispute, Evidence and Finalized Result views expose the mapped wr
 Writes use pinned `genlayer-js` **1.1.8** and its supported `writeContract` gas-estimation path. The app waits for `FINALIZED` and verifies successful execution. A stored pending hash blocks another write until the user checks its receipt. Read errors clear the order; no seeded order fallback exists.
 
 ## Verification
+
+[Completed live verification](docs/verification.md): 20 primary workflow/recovery writes, 6 separate synthetic-evidence writes, and 3 signed frontend relay writes finalized successfully. A separate short-window test finalized with a rollback for late evidence; its protected escrow was subsequently refunded.
 
 ```bash
 python -m unittest discover -s tests -v
