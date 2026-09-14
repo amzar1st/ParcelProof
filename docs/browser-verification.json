@@ -1,0 +1,146 @@
+{
+  "checks": [
+    {
+      "name": "desktop/renders five tabs",
+      "passed": true
+    },
+    {
+      "name": "desktop/missing wallet error",
+      "passed": true
+    },
+    {
+      "name": "desktop/live finalized claim",
+      "passed": true
+    },
+    {
+      "name": "desktop/tab Buyer",
+      "passed": true
+    },
+    {
+      "name": "desktop/tab Seller",
+      "passed": true
+    },
+    {
+      "name": "desktop/tab Dispute",
+      "passed": true
+    },
+    {
+      "name": "desktop/tab Evidence",
+      "passed": true
+    },
+    {
+      "name": "desktop/tab Finalized result",
+      "passed": true
+    },
+    {
+      "name": "desktop/finalized result",
+      "passed": true
+    },
+    {
+      "name": "desktop/failed read clears stale state",
+      "passed": true
+    },
+    {
+      "name": "desktop/test wallet selector",
+      "passed": true
+    },
+    {
+      "name": "desktop/wallet enables create without submitting",
+      "passed": true
+    },
+    {
+      "name": "desktop/source download",
+      "passed": true
+    },
+    {
+      "name": "desktop/no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "mobile/renders five tabs",
+      "passed": true
+    },
+    {
+      "name": "mobile/missing wallet error",
+      "passed": true
+    },
+    {
+      "name": "mobile/live finalized claim",
+      "passed": true
+    },
+    {
+      "name": "mobile/tab Buyer",
+      "passed": true
+    },
+    {
+      "name": "mobile/tab Seller",
+      "passed": true
+    },
+    {
+      "name": "mobile/tab Dispute",
+      "passed": true
+    },
+    {
+      "name": "mobile/tab Evidence",
+      "passed": true
+    },
+    {
+      "name": "mobile/tab Finalized result",
+      "passed": true
+    },
+    {
+      "name": "mobile/finalized result",
+      "passed": true
+    },
+    {
+      "name": "mobile/failed read clears stale state",
+      "passed": true
+    },
+    {
+      "name": "mobile/test wallet selector",
+      "passed": true
+    },
+    {
+      "name": "mobile/wallet enables create without submitting",
+      "passed": true
+    },
+    {
+      "name": "mobile/source download",
+      "passed": true
+    },
+    {
+      "name": "mobile/no horizontal overflow",
+      "passed": true
+    }
+  ],
+  "ci": {
+    "artifact": {
+      "digest": "sha256:50e55c6d4cb9ba34fcef14883f7c9643babb862a203e8eef9f2ec9bc5454da82",
+      "expires_at": "2026-10-14T14:04:01Z",
+      "id": 10351507198,
+      "name": "parcelproof-browser-evidence",
+      "size_in_bytes": 533500
+    },
+    "conclusion": "success",
+    "job_id": 104005368593,
+    "run_id": 34853002663,
+    "run_url": "https://github.com/amzar1st/ParcelProof/actions/runs/34853002663",
+    "source_commit": "a6b9f2ec666cec424b57cdf2d9dbc8f78f400d6f",
+    "workflow": "ParcelProof verification"
+  },
+  "completed_at": "2026-09-14T14:04:01.433Z",
+  "errors": [],
+  "scope": "Desktop/mobile Chromium against local preview. Finalized reads use real Studio RPC. Faucet responses mocked only for wallet-selector UI. No escrow writes or browser-wallet signatures.",
+  "viewports": [
+    {
+      "height": 1000,
+      "name": "desktop",
+      "width": 1440
+    },
+    {
+      "height": 844,
+      "name": "mobile",
+      "width": 390
+    }
+  ]
+}

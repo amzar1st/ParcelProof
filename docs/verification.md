@@ -66,3 +66,9 @@ The actual frontend helpers signed Create / Cancel / Refund via a local Node HTT
 44 contract unit tests, 9 frontend checks, TypeScript and the production build passed. The read-only Node HTTP relay test also rejects unauthorized RPC methods. Neither relay check is browser UI testing.
 
 Raw evidence: [primary](live-proof.json), [synthetic](fixture-proof.json), [signed relay](relay-signed-proof.json), [read-only relay](relay-verification.json), [pinned runtime compatibility](runtime-compatibility.json). Interrupted and superseded deployments are historical, not current settlement proofs.
+
+## Completed browser and CI verification
+
+[GitHub run](https://github.com/amzar1st/ParcelProof/actions/runs/34853002663) passed on source revision `a6b9f2ec666cec424b57cdf2d9dbc8f78f400d6f`: 44 contract tests, 9 frontend checks, TypeScript, the production build, and 28 Chromium smoke checks at 1440×1000 and 390×844. The local-preview browser checks cover five tabs, actual Studio finalized reads, failed-read stale-state clearing, missing-wallet errors, test-wallet controls, source download, and horizontal overflow. See [permanent JSON proof](browser-verification.json).
+
+Faucet responses are mocked only to exercise wallet-selector UI. No signed browser transactions or extension-wallet signing are claimed; actual signed helper/relay workflows are proved separately. Screenshots are available in the run's browser-evidence artifact (retention 30 days); the JSON proof remains in this repository. The first run clicked the SSR button before client startup; waiting for network idle fixed the test race without changing application code.

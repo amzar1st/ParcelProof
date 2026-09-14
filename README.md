@@ -40,6 +40,8 @@ Writes use pinned `genlayer-js` **1.1.8** and its supported `writeContract` gas-
 
 ## Verification
 
+[Successful GitHub verification](https://github.com/amzar1st/ParcelProof/actions/runs/34853002663): 44 contract tests, 9 frontend checks, TypeScript, production build, and 28 Chromium desktop/mobile smoke checks passed. [Permanent browser result](docs/browser-verification.json). Browser smoke checks use a local preview; signed transaction verification is recorded separately.
+
 [Completed live verification](docs/verification.md): 20 primary workflow/recovery writes, 6 separate synthetic-evidence writes, and 3 signed frontend relay writes finalized successfully. A separate short-window test finalized with a rollback for late evidence; its protected escrow was subsequently refunded.
 
 ```bash

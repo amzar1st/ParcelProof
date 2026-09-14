@@ -50,3 +50,5 @@ No demo video has been recorded. Check the target program for any video requirem
 Public access is confirmed in [publication.json](publication.json). This pack describes the completed Studio sandbox MVP, not production settlement. The target submission page has not been supplied, so acceptance of Studio-network evidence, required topic choices, and video requirements are not verified. No portal submission has been made. Do not describe synthetic records as real carrier evidence.
 
 Additional evidence: [completed verification](verification.md), [signed wallet/relay receipts](relay-signed-proof.json), [release checklist](release-checklist.md).
+
+Browser evidence: [28 passed desktop/mobile checks](browser-verification.json) and [successful automated verification](https://github.com/amzar1st/ParcelProof/actions/runs/34853002663). The browser checks exercise local-preview UI and real finalized reads; signed Studio workflow receipts are separate. No portal-specific eligibility claim is made.
