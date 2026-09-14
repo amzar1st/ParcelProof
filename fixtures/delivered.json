@@ -1,0 +1,9 @@
+{
+  "source_kind": "SYNTHETIC_CARRIER_TEST_FIXTURE_NOT_A_REAL_SHIPMENT",
+  "shipment_reference": "PP-FIXTURE-001",
+  "recipient_hint": "Colombo 00700",
+  "delivery_status": "DELIVERED",
+  "delivered_at": 1789375256,
+  "delivered_at_iso": "2026-09-14T08:40:56.000Z",
+  "proof_of_delivery": "Synthetic carrier record: recipient received parcel at the committed public destination."
+}
