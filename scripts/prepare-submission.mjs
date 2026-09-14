@@ -46,9 +46,10 @@ for(const path of ['README.md','docs/submission.md']) {
  text=text.replaceAll(old.address,deployment.address).replaceAll(old.deployment_transaction,deployment.deployment_transaction);
  text=text.replace(' after the live smoke finishes','').replace(' after the completed live smoke','');
  text=text.replace('Add the confirmed app URL and individual proof transaction URLs from the completed live-proof record.','Completed transaction evidence: https://github.com/amzar1st/ParcelProof/blob/main/docs/verification.md\n\nSynthetic web/LLM consensus evidence (not real carrier evidence): https://github.com/amzar1st/ParcelProof/blob/main/docs/fixture-proof.json');
+ if(path==='README.md')text=text.replace(/\n\[Completed live verification\]\(docs\/verification\.md\):[^\n]*\n/g,'\n');
  if(path==='README.md')text=text.replace('## Verification\n',`## Verification\n\n[Completed live verification](docs/verification.md): ${main.transactions.length} primary workflow/recovery writes, ${fixture.transactions.length} separate synthetic-evidence writes, and ${relay.transactions.length} signed frontend relay writes finalized successfully. A separate short-window test finalized with a rollback for late evidence; its protected escrow was subsequently refunded.\n`);
  text=text.replaceAll('parcelproof-review-001',main.ids.dispute);
- if(!text.includes(url))text+=`\nWebsite: ${url} (currently owner-private).\n`;
+ if(!text.includes(url))text+=`\nWebsite: ${url} (see docs/publication.json for recorded access).\n`;
  fs.writeFileSync(path,text);
 }
 console.log('Submission evidence generated only from completed, successful finalized receipts.');
